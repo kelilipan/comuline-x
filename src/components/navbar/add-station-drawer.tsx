@@ -81,7 +81,9 @@ const AddStationDrawer = ({ open, onOpenChange }: AddStationDrawerProps) => {
     <Drawer
       open={open}
       onOpenChange={onOpenChange}
-      shouldScaleBackground={false}
+      shouldScaleBackground={true}
+      noBodyStyles
+      setBackgroundColorOnScale={false}
       closeThreshold={0.35}
     >
       <DrawerTrigger asChild>
@@ -104,8 +106,8 @@ const AddStationDrawer = ({ open, onOpenChange }: AddStationDrawerProps) => {
             cari nama stasiun dan tambahkan ke dalam daftar stasiun
           </DrawerDescription>
         </DrawerHeader>
-        <ScrollArea className="h-[75vh] w-full box-content">
-          <div className="relative w-full border-b">
+        <ScrollArea className="h-[85vh] w-full relative">
+          <div className="w-full border-b sticky top-0 bg-border">
             <IoSearchOutline className="absolute left-2 top-2" />
             <InputComponent ref={inputRef} onValueChange={setQuery} />
           </div>

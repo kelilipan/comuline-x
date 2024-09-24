@@ -32,7 +32,9 @@ const FilterDrawer = ({ open, onOpenChange }: FilterDrawerProps) => {
     <Drawer
       open={open}
       onOpenChange={onOpenChange}
-      shouldScaleBackground={false}
+      noBodyStyles
+      setBackgroundColorOnScale={false}
+      shouldScaleBackground={true}
     >
       <DrawerTrigger asChild>
         <button
