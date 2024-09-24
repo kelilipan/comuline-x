@@ -6,6 +6,5 @@ export default async function fetcher<JSON = any>(
   const prevURL = typeof input === "string" ? input : input.url;
   const newURL = new URL(proxyURL + prevURL, proxyURL);
   const res = await fetch(newURL, init);
-  console.log(res);
   return res.json();
 }

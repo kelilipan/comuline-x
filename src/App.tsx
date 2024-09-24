@@ -3,6 +3,7 @@ import { getSerwist } from "virtual:serwist";
 import StationList from "./components/station-list";
 import Navbar from "./components/navbar";
 import { StationProvider } from "./contexts/stations-context";
+import { UIProvider } from "./contexts/ui-context";
 
 function App() {
   useEffect(() => {
@@ -23,11 +24,13 @@ function App() {
 
   return (
     <StationProvider>
-      <Navbar />
-      <main className="flex-1 mt-2 mb-8">
-        <StationList />
-      </main>
-      {/* <div>bottomnav</div> */}
+      <UIProvider>
+        <Navbar />
+        <main className="flex-1 mt-2 mb-8">
+          <StationList />
+        </main>
+        {/* <div>bottomnav</div> */}
+      </UIProvider>
     </StationProvider>
   );
 }

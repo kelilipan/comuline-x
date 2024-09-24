@@ -7,22 +7,15 @@ import FilterDrawer from "./filter-drawer";
 import AddStationDrawer from "./add-station-drawer";
 import debounce from "@/lib/debounce";
 import { useStationContext } from "@/contexts/stations-context";
-
-const INITIAL_UI_STATE = {
-  showSearch: false,
-  showFilter: false,
-  showAddStation: false,
-};
+import { useUIContext } from "@/contexts/ui-context";
 
 const Navbar = () => {
-  const [uiState, setState] = useState(INITIAL_UI_STATE);
+  const { uiState, handleToggleState } = useUIContext();
   const inputContainerRef = useRef(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const logoRef = useRef(null);
   const { setQuery } = useStationContext();
-  const handleToggleState = (key: keyof typeof INITIAL_UI_STATE) => {
-    setState((prev) => ({ ...INITIAL_UI_STATE, [key]: !prev[key] }));
-  };
+
   useEffect(() => {
     if (uiState.showSearch) {
       inputRef.current?.focus();
@@ -78,15 +71,11 @@ const Navbar = () => {
         </button>
         <FilterDrawer
           open={uiState.showFilter}
-          onOpenChange={(open) =>
-            setState({ ...INITIAL_UI_STATE, showFilter: open })
-          }
+          onOpenChange={() => handleToggleState("showFilter")}
         />
         <AddStationDrawer
           open={uiState.showAddStation}
-          onOpenChange={(open) =>
-            setState({ ...INITIAL_UI_STATE, showAddStation: open })
-          }
+          onOpenChange={() => handleToggleState("showAddStation")}
         />
       </div>
     </header>
