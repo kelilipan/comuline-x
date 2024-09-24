@@ -1,24 +1,16 @@
-import useSWR from "swr";
 import StationList from "./components/station-list";
-import fetcher from "./lib/fetcher";
-import type { APIResponse } from "./models/response";
-import type { Schedule } from "./models/schedule";
 import Navbar from "./components/navbar";
+import { StationProvider } from "./contexts/stations-context";
 
 function App() {
-  // const { data, error, isLoading } = useSWR<APIResponse<Schedule>>(
-  //   "/v1/station/",
-  //   fetcher
-  // );
-  // console.log({ data, error, isLoading });
   return (
-    <>
+    <StationProvider>
       <Navbar />
-      <main className="flex-1 px-3 mt-2">
+      <main className="flex-1 mt-2 mb-8">
         <StationList />
       </main>
       {/* <div>bottomnav</div> */}
-    </>
+    </StationProvider>
   );
 }
 

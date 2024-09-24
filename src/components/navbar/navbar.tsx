@@ -1,10 +1,12 @@
-import { useEffect, useRef, useState } from "react";
+import { forwardRef, useCallback, useEffect, useRef, useState } from "react";
 import { IoSearchOutline, IoAdd } from "react-icons/io5";
 import { CSSTransition } from "react-transition-group";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import FilterDrawer from "./filter-drawer";
 import AddStationDrawer from "./add-station-drawer";
+import debounce from "@/lib/debounce";
+import { useStationContext } from "@/contexts/stations-context";
 
 const INITIAL_UI_STATE = {
   showSearch: false,
@@ -17,6 +19,7 @@ const Navbar = () => {
   const inputContainerRef = useRef(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const logoRef = useRef(null);
+  const { setQuery } = useStationContext();
   const handleToggleState = (key: keyof typeof INITIAL_UI_STATE) => {
     setState((prev) => ({ ...INITIAL_UI_STATE, [key]: !prev[key] }));
   };
@@ -54,11 +57,7 @@ const Navbar = () => {
         >
           <div className="absolute left-0 w-full" ref={inputContainerRef}>
             <IoSearchOutline className="absolute left-2 top-2" />
-            <Input
-              ref={inputRef}
-              className="h-8 pl-8"
-              placeholder="Cari stasiun keberangkatan"
-            />
+            <InputComponent ref={inputRef} onValueChange={setQuery} />
           </div>
         </CSSTransition>
       </div>
@@ -93,5 +92,35 @@ const Navbar = () => {
     </header>
   );
 };
+
+//input component to isolate rerenders and to do debounce function
+interface InputComponentProps {
+  onValueChange: (value: string) => void;
+}
+const InputComponent = forwardRef<HTMLInputElement, InputComponentProps>(
+  ({ onValueChange }, ref) => {
+    const [value, setValue] = useState("");
+    const handleInputChange = useCallback(
+      debounce((value: string) => {
+        onValueChange(value);
+      }, 300),
+      []
+    );
+
+    return (
+      <Input
+        ref={ref}
+        className="h-8 pl-8 focus-visible:ring-0 focus-visible:bg-border"
+        placeholder="Cari stasiun keberangkatan"
+        value={value}
+        onChange={(e) => {
+          setValue(e.target.value);
+          //debounce value
+          handleInputChange(e.target.value);
+        }}
+      />
+    );
+  }
+);
 
 export default Navbar;

@@ -1,12 +1,14 @@
 import { Accordion } from "@/components/ui/accordion";
 import StationItem from "./station-item";
+import { useStationContext } from "@/contexts/stations-context";
 
 const StationList = () => {
+  const { filteredStations } = useStationContext();
   return (
     <Accordion type="multiple">
-      <StationItem index={1} />
-      <StationItem index={2} />
-      <StationItem index={3} />
+      {filteredStations.map((item) => (
+        <StationItem key={item.id} {...item} />
+      ))}
     </Accordion>
   );
 };

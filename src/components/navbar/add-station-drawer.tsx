@@ -6,12 +6,14 @@ import {
   useRef,
   useState,
 } from "react";
+import useSWR from "swr";
+
 import { IoAdd, IoClose, IoSearchOutline } from "react-icons/io5";
 
 import {
   Drawer,
   DrawerContent,
-  DrawerFooter,
+  DrawerDescription,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
@@ -20,9 +22,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 import { cn } from "@/lib/utils";
-import { stations_temp } from "./testdata";
 import { Station } from "@/models/station";
 import debounce from "@/lib/debounce";
+import { APIResponse } from "@/models/response";
+import fetcher from "@/lib/fetcher";
+import { useStationContext } from "@/contexts/stations-context";
 
 interface AddStationDrawerProps {
   open: boolean;
@@ -30,30 +34,40 @@ interface AddStationDrawerProps {
 }
 
 const AddStationDrawer = ({ open, onOpenChange }: AddStationDrawerProps) => {
-  const [selectedStation, setSelectedStatus] = useState<Station[]>([]);
+  const {
+    stations: selectedStation,
+    addStation,
+    removeStation,
+  } = useStationContext();
   const [query, setQuery] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+  const { data } = useSWR<APIResponse<Station[]>>("/v1/station/", fetcher);
+  const stationData = data?.data;
 
   const filteredStation = useMemo(() => {
-    return stations_temp.data.filter(
-      (station) =>
-        station.name.toLowerCase().includes(query.toLowerCase()) &&
-        !selectedStation.some((selected) => selected.id === station.id)
-    );
-  }, [stations_temp.data, query, selectedStation]);
+    if (stationData) {
+      return stationData.filter(
+        (station) =>
+          station.name.toLowerCase().includes(query.toLowerCase()) &&
+          !selectedStation.some((selected) => selected.id === station.id)
+      );
+    }
+    return [];
+  }, [stationData, query, selectedStation]);
 
   const handleAddStation = (value: Station) => {
-    setSelectedStatus((prev) =>
-      [...prev, value].sort((a, b) => a.name.localeCompare(b.name))
-    );
+    addStation(value);
   };
 
   const handleRemoveStation = (id: Station["id"]) => {
-    setSelectedStatus((prev) => prev.filter((item) => item.id !== id));
+    removeStation(id);
   };
 
   useEffect(() => {
     if (open) inputRef.current?.focus();
+    return () => {
+      setQuery("");
+    };
   }, [open]);
 
   return (
@@ -76,6 +90,9 @@ const AddStationDrawer = ({ open, onOpenChange }: AddStationDrawerProps) => {
       <DrawerContent>
         <DrawerHeader>
           <DrawerTitle>Tambahkan Stasiun</DrawerTitle>
+          <DrawerDescription className="sr-only">
+            cari nama stasiun dan tambahkan ke dalam daftar stasiun
+          </DrawerDescription>
         </DrawerHeader>
         <div className="h-[75vh] w-full box-content">
           <div className="relative w-full border-b">
@@ -88,6 +105,7 @@ const AddStationDrawer = ({ open, onOpenChange }: AddStationDrawerProps) => {
             </span>
             {selectedStation.map((item) => (
               <Button
+                key={item.id}
                 variant="ghost"
                 className="flex w-full rounded-none justify-start capitalize hover:bg-destructive/90"
                 onClick={() => handleRemoveStation(item.id)}
@@ -104,6 +122,7 @@ const AddStationDrawer = ({ open, onOpenChange }: AddStationDrawerProps) => {
 
             {filteredStation.map((item) => (
               <Button
+                key={item.id}
                 variant="ghost"
                 className="flex w-full rounded-none justify-start capitalize"
                 onClick={() => handleAddStation(item)}
@@ -113,10 +132,6 @@ const AddStationDrawer = ({ open, onOpenChange }: AddStationDrawerProps) => {
             ))}
           </div>
         </div>
-
-        <DrawerFooter>
-          <Button onClick={() => onOpenChange(false)}>Apply</Button>
-        </DrawerFooter>
       </DrawerContent>
     </Drawer>
   );

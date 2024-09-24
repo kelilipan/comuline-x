@@ -6,3 +6,7 @@ export interface Station {
   haveSchedule: boolean;
   updatedAt: string;
 }
+
+export interface StationLS extends Station {
+  savedAt: string;
+}

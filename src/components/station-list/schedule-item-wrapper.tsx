@@ -7,7 +7,7 @@ const ScheduleItemWrapper = ({
   children,
   className,
 }: ScheduleItemWrapperProps) => {
-  const isMobile = true;
+  const isMobile = false;
   if (isMobile) {
     return (
       <button
@@ -20,7 +20,7 @@ const ScheduleItemWrapper = ({
       </button>
     );
   }
-  return <div className="p-1">{children}</div>;
+  return <div className={cn("p-1", className)}>{children}</div>;
 };
 
 export default ScheduleItemWrapper;

@@ -1,7 +1,10 @@
+import { useState } from "react";
+
 import { IoFunnelOutline } from "react-icons/io5";
 import {
   Drawer,
   DrawerContent,
+  DrawerDescription,
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
@@ -10,12 +13,21 @@ import {
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Button } from "../ui/button";
+import { useStationContext } from "@/contexts/stations-context";
 
 interface FilterDrawerProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }
 const FilterDrawer = ({ open, onOpenChange }: FilterDrawerProps) => {
+  const { sort, sortBy } = useStationContext();
+  const [value, setValue] = useState<string>(sort);
+
+  const handleChangeFilter = () => {
+    //type check
+    sortBy(value === "name" ? "name" : "date");
+    onOpenChange(false);
+  };
   return (
     <Drawer
       open={open}
@@ -30,10 +42,13 @@ const FilterDrawer = ({ open, onOpenChange }: FilterDrawerProps) => {
       <DrawerContent>
         <DrawerHeader>
           <DrawerTitle>Urutkan</DrawerTitle>
+          <DrawerDescription className="sr-only">
+            Urutkan daftar stasiun berdasarkan:
+          </DrawerDescription>
         </DrawerHeader>
         <RadioGroup
-          defaultValue="name"
-          onValueChange={console.log}
+          value={value}
+          onValueChange={setValue}
           className="px-4 py-2 mb-2 gap-0"
         >
           <div className="flex items-center space-x-2 border-b">
@@ -50,7 +65,7 @@ const FilterDrawer = ({ open, onOpenChange }: FilterDrawerProps) => {
           </div>
         </RadioGroup>
         <DrawerFooter>
-          <Button onClick={() => onOpenChange(false)}>Apply</Button>
+          <Button onClick={handleChangeFilter}>Apply</Button>
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
