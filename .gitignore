@@ -26,3 +26,5 @@ dist-ssr
 # Serwist
 public/sw*
 public/swe-worker*
+
+.env
