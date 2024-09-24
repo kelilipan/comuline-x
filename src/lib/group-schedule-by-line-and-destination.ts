@@ -15,11 +15,19 @@ const groupScheduleByLineAndDestination = (
     const lineKeyRecord = acc[lineKey] ?? {};
     const destKeyArray = lineKeyRecord[destKey] ?? [];
 
-    destKeyArray.push({
-      ...obj,
-      timeEstimated: _formatEstimatedTime(obj.timeEstimated),
-      destinationTime: _formatEstimatedTime(obj.destinationTime),
-    });
+    //filter schedule from now
+    const now = new Date();
+    const [hours, minutes] = obj.timeEstimated.split(":").map(Number);
+    const timeEstimated = new Date(now);
+    timeEstimated.setHours(hours, minutes, 0, 0); // Set hours, minutes, seconds
+
+    if (timeEstimated > now) {
+      destKeyArray.push({
+        ...obj,
+        timeEstimated: _formatEstimatedTime(obj.timeEstimated),
+        destinationTime: _formatEstimatedTime(obj.destinationTime),
+      });
+    }
 
     lineKeyRecord[destKey] = destKeyArray;
     acc[lineKey] = lineKeyRecord;

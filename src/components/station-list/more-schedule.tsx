@@ -21,7 +21,7 @@ const MoreSchedule = ({ schedules }: NextScheduleProps) => {
                 key={item.id}
                 className="bg-border font-mono font-bold w-full text-center rounded py-2"
               >
-                {item.destinationTime}
+                {item.timeEstimated}
               </ScheduleItemWrapper>
             ))}
           </div>
