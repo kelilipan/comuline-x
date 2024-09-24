@@ -22,8 +22,7 @@ declare global {
 declare const self: ServiceWorkerGlobalScope;
 const runtimeCaching: RuntimeCaching[] = [
   {
-    matcher: ({ url }) =>
-      url.pathname.startsWith(import.meta.env.VITE_PROXY_URL),
+    matcher: ({ url }) => url.href.startsWith(import.meta.env.VITE_PROXY_URL),
     handler: new StaleWhileRevalidate({
       cacheName: "comuline-proxy-api",
       plugins: [
