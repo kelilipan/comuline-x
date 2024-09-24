@@ -110,9 +110,6 @@
     width: 100%;
     @apply bg-background rounded;
   }
-  html {
-    scrollbar-gutter: stable;
-  }
 }
 
 /* manually import fonts from next/fonts */
