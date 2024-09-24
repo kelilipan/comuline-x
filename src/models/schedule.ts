@@ -11,4 +11,7 @@ export interface Schedule {
   updatedAt: string;
 }
 
-export type GroupedSchedule = Record<string, Record<string, Array<Schedule>>>;
+export type GroupedSchedule = Record<
+  string,
+  Record<string, Array<Schedule>>
+> & { isEmpty?: boolean };

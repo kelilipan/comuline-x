@@ -9,6 +9,9 @@ const groupScheduleByLineAndDestination = (
   schedules: Schedule[]
 ): GroupedSchedule => {
   return schedules.reduce((acc: GroupedSchedule, obj) => {
+    //flag if schedule is empty
+    acc.isEmpty = true;
+
     const lineKey = `${obj.line}-${obj.color}`;
     const destKey = obj.destination;
 
@@ -20,8 +23,8 @@ const groupScheduleByLineAndDestination = (
     const [hours, minutes] = obj.timeEstimated.split(":").map(Number);
     const timeEstimated = new Date(now);
     timeEstimated.setHours(hours, minutes, 0, 0); // Set hours, minutes, seconds
-
     if (timeEstimated > now) {
+      acc.isEmpty = false;
       destKeyArray.push({
         ...obj,
         timeEstimated: _formatEstimatedTime(obj.timeEstimated),
@@ -34,4 +37,5 @@ const groupScheduleByLineAndDestination = (
     return acc;
   }, {});
 };
+
 export default groupScheduleByLineAndDestination;
