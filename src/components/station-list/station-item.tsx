@@ -96,7 +96,7 @@ const StationItem = ({ id, name }: Station) => {
                       <p className="text-xs text-muted-foreground">
                         Arah menuju
                       </p>
-                      <h2 className="text-lg capitalize">
+                      <h2 className="text-lg font-semibold capitalize">
                         {firstSchedule?.destination.toLowerCase()}
                       </h2>{" "}
                       <p className="opacity-30 text-xs">
