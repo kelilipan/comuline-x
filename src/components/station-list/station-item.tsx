@@ -7,6 +7,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
+import { Loader, RefreshCcw } from "lucide-react";
+
 import { getRelativeTimeString } from "@/lib/date";
 import groupScheduleByDestination from "@/lib/group-schedule-by-line-and-destination";
 import { cn } from "@/lib/utils";
@@ -18,9 +20,12 @@ import type { APIResponse } from "@/models/response";
 import MoreSchedule from "./more-schedule";
 import NextSchedule from "./next-schedule";
 import ScheduleItemWrapper from "./schedule-item-wrapper";
+import StationLoader from "./station-item.loader";
 
 const StationItem = ({ id, name }: Station) => {
-  const { data } = useSWR<APIResponse<Schedule[]>>(`/v1/schedule/${id}`);
+  const { data, isLoading, error, mutate } = useSWR<APIResponse<Schedule[]>>(
+    `/v1/schedule/${id}`
+  );
 
   const groupedSchedules = useMemo(() => {
     if (!data?.data) return {};
@@ -34,11 +39,24 @@ const StationItem = ({ id, name }: Station) => {
       <AccordionTrigger headerClasName="sticky top-0 px-4 bg-background z-10 bg-background backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="grid w-full text-left">
           <p className="text-xs text-muted-foreground font-semibold">Stasiun</p>
-          <h1 className="text-xl font-bold capitalize">{name.toLowerCase()}</h1>
+          <h1 className="text-xl font-bold capitalize">
+            {name.toLowerCase()}{" "}
+            {isLoading ? (
+              <Loader size={16} className="animate-spin opacity-50 inline" />
+            ) : error ? (
+              <RefreshCcw
+                aria-label="terjadi kesalahan, klik untuk coba lagi"
+                size={16}
+                onClick={() => mutate()}
+                className="opacity-50 inline"
+              />
+            ) : null}
+          </h1>
         </div>
       </AccordionTrigger>
       <AccordionContent className="box-border divide-y divide-solid pl-8 pr-4">
-        {isScheduleEmpty && (
+        {isLoading && <StationLoader />}
+        {!isLoading && isScheduleEmpty && (
           <p className="text-sm opacity-50 -ml-4">
             Jadwal kereta api tidak tersedia. Cek lagi pada esok hari.
           </p>
