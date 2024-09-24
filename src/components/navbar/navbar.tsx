@@ -19,6 +19,8 @@ const Navbar = () => {
   useEffect(() => {
     if (uiState.showSearch) {
       inputRef.current?.focus();
+    } else {
+      setQuery("");
     }
   }, [uiState.showSearch]);
 

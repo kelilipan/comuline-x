@@ -6,7 +6,7 @@ import { useStationContext } from "@/contexts/stations-context";
 import EmptyState from "./empty-state";
 
 const StationList = () => {
-  const { filteredStations } = useStationContext();
+  const { filteredStations, query } = useStationContext();
   return (
     <ScrollArea className="h-[calc(100vh-56px)] pb-8">
       <Accordion type="multiple">
@@ -15,7 +15,7 @@ const StationList = () => {
             <StationItem key={item.id} {...item} />
           ))
         ) : (
-          <EmptyState />
+          <EmptyState notFound={Boolean(query)} />
         )}
       </Accordion>
     </ScrollArea>
