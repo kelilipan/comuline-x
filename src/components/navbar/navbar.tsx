@@ -21,6 +21,7 @@ const Navbar = () => {
       inputRef.current?.focus();
     }
   }, [uiState.showSearch]);
+
   return (
     <header className="px-3 mt-4 justify-between flex flex-nowrap h-8 items-center">
       <div className="mr-4 w-full h-full relative flex items-center">

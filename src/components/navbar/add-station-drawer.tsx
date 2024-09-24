@@ -55,6 +55,12 @@ const AddStationDrawer = ({ open, onOpenChange }: AddStationDrawerProps) => {
     return [];
   }, [stationData, query, selectedStation]);
 
+  const filteredSelectedStation = useMemo(() => {
+    return selectedStation.filter((station) =>
+      station.name.toLowerCase().includes(query.toLowerCase())
+    );
+  }, [selectedStation, query, selectedStation]);
+
   const handleAddStation = (value: Station) => {
     addStation(value);
   };
@@ -106,7 +112,7 @@ const AddStationDrawer = ({ open, onOpenChange }: AddStationDrawerProps) => {
             <span className="text-muted-foreground text-sm mx-2">
               Tersimpan
             </span>
-            {selectedStation.map((item) => (
+            {filteredSelectedStation.map((item) => (
               <Button
                 key={item.id}
                 variant="ghost"
