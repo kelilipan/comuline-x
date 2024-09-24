@@ -78,7 +78,10 @@ const AddStationDrawer = ({ open, onOpenChange }: AddStationDrawerProps) => {
       closeThreshold={0.35}
     >
       <DrawerTrigger asChild>
-        <button className="transition-all duration-200 visible text-foreground/50 hover:text-foreground">
+        <button
+          aria-label="tambahkan stasiun"
+          className="transition-all duration-200 visible text-foreground/50 hover:text-foreground"
+        >
           <IoAdd
             className={cn(
               "h-5 w-5 transition-transform",

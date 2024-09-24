@@ -35,7 +35,10 @@ const FilterDrawer = ({ open, onOpenChange }: FilterDrawerProps) => {
       shouldScaleBackground={false}
     >
       <DrawerTrigger asChild>
-        <button className="transition-all duration-200 visible text-foreground/50 hover:text-foreground">
+        <button
+          aria-label="urutkan stasiun"
+          className="transition-all duration-200 visible text-foreground/50 hover:text-foreground"
+        >
           <IoFunnelOutline className="h-5 w-5" />
         </button>
       </DrawerTrigger>

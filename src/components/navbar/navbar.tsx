@@ -57,6 +57,7 @@ const Navbar = () => {
 
       <div className="flex gap-4">
         <button
+          aria-label="Cari stasiun keberangkatan"
           onClick={() => handleToggleState("showSearch")}
           className={cn(
             "transition-all duration-200 visible text-foreground/50 hover:text-foreground",
