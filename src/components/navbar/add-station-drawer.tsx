@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 import { cn } from "@/lib/utils";
 import { Station } from "@/models/station";
@@ -103,7 +104,7 @@ const AddStationDrawer = ({ open, onOpenChange }: AddStationDrawerProps) => {
             cari nama stasiun dan tambahkan ke dalam daftar stasiun
           </DrawerDescription>
         </DrawerHeader>
-        <div className="h-[75vh] w-full box-content">
+        <ScrollArea className="h-[75vh] w-full box-content">
           <div className="relative w-full border-b">
             <IoSearchOutline className="absolute left-2 top-2" />
             <InputComponent ref={inputRef} onValueChange={setQuery} />
@@ -140,7 +141,7 @@ const AddStationDrawer = ({ open, onOpenChange }: AddStationDrawerProps) => {
               </Button>
             ))}
           </div>
-        </div>
+        </ScrollArea>
       </DrawerContent>
     </Drawer>
   );

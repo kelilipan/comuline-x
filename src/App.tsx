@@ -26,9 +26,10 @@ function App() {
     <StationProvider>
       <UIProvider>
         <Navbar />
-        <main className="flex-1 mt-2 mb-8">
+        <main className="mt-2 overflow-hidden relative">
           <StationList />
         </main>
+
         {/* <div>bottomnav</div> */}
       </UIProvider>
     </StationProvider>
