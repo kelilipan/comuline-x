@@ -103,7 +103,7 @@ const InputComponent = forwardRef<HTMLInputElement, InputComponentProps>(
     const handleInputChange = useCallback(
       debounce((value: string) => {
         onValueChange(value);
-      }, 300),
+      }, 200),
       []
     );
 
