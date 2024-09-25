@@ -58,19 +58,19 @@ const Navbar = () => {
         </CSSTransition>
       </div>
 
-      <div className="flex gap-4">
+      <div className="flex gap-2">
         <button
           aria-label="Cari stasiun keberangkatan"
           onClick={() => handleToggleState("showSearch")}
           className={cn(
-            "transition-all duration-200 visible text-foreground/50 hover:text-foreground",
+            "transition-all duration-200 visible text-foreground/50 hover:text-foreground p-1",
             uiState.showSearch && "text-foreground"
           )}
         >
           {uiState.showSearch ? (
-            <IoAdd className="h-5 w-5 animate-rotate-45" />
+            <IoAdd className="size-6 animate-rotate-45" />
           ) : (
-            <IoSearchOutline className="h-5 w-5" />
+            <IoSearchOutline className="size-6" />
           )}
         </button>
         <FilterDrawer

@@ -89,11 +89,11 @@ const AddStationDrawer = ({ open, onOpenChange }: AddStationDrawerProps) => {
       <DrawerTrigger asChild>
         <button
           aria-label="tambahkan stasiun"
-          className="transition-all duration-200 visible text-foreground/50 hover:text-foreground"
+          className="transition-all duration-200 visible text-foreground/50 hover:text-foreground p-1"
         >
           <IoAdd
             className={cn(
-              "h-5 w-5 transition-transform",
+              "size-6 transition-transform",
               open ? "rotate-45" : "rotate-0"
             )}
           />
