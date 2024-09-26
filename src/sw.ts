@@ -28,7 +28,7 @@ const runtimeCaching: RuntimeCaching[] = [
       cacheName: "comuline-proxy-api",
       plugins: [
         new ExpirationPlugin({
-          maxEntries: 128,
+          maxEntries: 64,
           maxAgeSeconds: 7 * 24 * 60 * 60, // 7 days
           maxAgeFrom: "last-used",
         }),
