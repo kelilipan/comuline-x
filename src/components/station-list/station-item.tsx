@@ -24,7 +24,10 @@ import StationLoader from "./station-item.loader";
 
 const StationItem = ({ id, name }: Station) => {
   const { data, isLoading, error, mutate } = useSWR<APIResponse<Schedule[]>>(
-    `/api/v1/schedule/${id}`
+    `/api/v1/schedule/${id}`,
+    {
+      refreshInterval: 10_000, //10s,
+    }
   );
 
   const groupedSchedules = useMemo(() => {
