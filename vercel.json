@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/api/:match*",
+      "destination": "https://www.api.comuline.com/:match*"
+    }
+  ]
+}

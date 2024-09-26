@@ -24,7 +24,7 @@ import StationLoader from "./station-item.loader";
 
 const StationItem = ({ id, name }: Station) => {
   const { data, isLoading, error, mutate } = useSWR<APIResponse<Schedule[]>>(
-    `/v1/schedule/${id}`
+    `/api/v1/schedule/${id}`
   );
 
   const groupedSchedules = useMemo(() => {
