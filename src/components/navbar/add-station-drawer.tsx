@@ -42,7 +42,7 @@ const AddStationDrawer = ({ open, onOpenChange }: AddStationDrawerProps) => {
   } = useStationContext();
   const [query, setQuery] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
-  const { data } = useSWR<APIResponse<Station[]>>("/api/v1/station/", fetcher);
+  const { data } = useSWR<APIResponse<Station[]>>("/api/v1/station", fetcher);
   const stationData = data?.data;
 
   const filteredStation = useMemo(() => {
