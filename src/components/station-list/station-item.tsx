@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
 
 import {
@@ -25,15 +25,24 @@ import StationLoader from "./station-item.loader";
 const StationItem = ({ id, name }: Station) => {
   const { data, isLoading, error, mutate } = useSWR<APIResponse<Schedule[]>>(
     `/api/v1/schedule/${id}`
-    // {
-    //   refreshInterval: 10_000, //10s,
-    // }
   );
+
+  const [refreshInterval, setRefreshInterval] = useState(0);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      // This forces a re-render every 60 seconds, to update latest station & relative time
+      setRefreshInterval((prev) => prev + 1);
+    }, 60000); // 60,000 milliseconds = 60 seconds
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   const groupedSchedules = useMemo(() => {
     if (!data?.data) return {};
     return groupScheduleByDestination(data.data);
-  }, [data]);
+  }, [data, refreshInterval]);
+
   const lines = Object.keys(groupedSchedules);
   const { isEmpty: isScheduleEmpty } = groupedSchedules;
 
