@@ -1,13 +1,17 @@
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
+import { Capacitor } from "@capacitor/core";
 import { cn } from "@/lib/utils";
+
 interface ScheduleItemWrapperProps extends PropsWithChildren {
   className?: string;
 }
+
 const ScheduleItemWrapper = ({
   children,
   className,
 }: ScheduleItemWrapperProps) => {
-  const isMobile = false;
+  const isMobile = Capacitor.isNativePlatform();
+
   if (isMobile) {
     return (
       <button

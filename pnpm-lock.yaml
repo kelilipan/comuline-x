@@ -8,12 +8,18 @@ importers:
 
   .:
     dependencies:
+      '@capacitor-community/storage-react':
+        specifier: ^0.1.0
+        version: 0.1.0(@capacitor/core@6.1.2)(@capacitor/storage@1.2.5(@capacitor/core@6.1.2))(react@18.3.1)
       '@capacitor/android':
         specifier: 6.1.2
         version: 6.1.2(@capacitor/core@6.1.2)
       '@capacitor/core':
         specifier: ^6.1.2
         version: 6.1.2
+      '@capacitor/local-notifications':
+        specifier: ^6.1.0
+        version: 6.1.0(@capacitor/core@6.1.2)
       '@radix-ui/react-accordion':
         specifier: ^1.2.0
         version: 1.2.0(@types/react-dom@18.3.0)(@types/react@18.3.5)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -143,6 +149,13 @@ packages:
     resolution: {integrity: sha512-VBj9MYyDb9tuLq7yzqjgzt6Q+IBQLrGZfdjOekyEirZPHxXWoTSGUTMrpsfi58Up73d13NfYLv8HT9vmznjzhQ==}
     engines: {node: '>=6.9.0'}
 
+  '@capacitor-community/storage-react@0.1.0':
+    resolution: {integrity: sha512-llJnC+KxPUd5foHMZV1Iis/kMbTq1qLNDxaiGkgQg3rED0piRR55TKKt2Ulrnqbxm2ebsttl70+lU9LXfOBLfQ==}
+    peerDependencies:
+      '@capacitor/core': '>=3.0.0'
+      '@capacitor/storage': '*'
+      react: '*'
+
   '@capacitor/android@6.1.2':
     resolution: {integrity: sha512-Yh0gQDY1bgRrL25J6ecIlvvs2kF8iNSwIPXjyw6Yz9mnwYxBazF5KZbjpKtGPnJgicJhFkYGsqOkEtxrve0EoQ==}
     peerDependencies:
@@ -155,6 +168,17 @@ packages:
 
   '@capacitor/core@6.1.2':
     resolution: {integrity: sha512-xFy1/4qLFLp5WCIzIhtwUuVNNoz36+V7/BzHmLqgVJcvotc4MMjswW/TshnPQaLLujEOaLkA4h8ZJ0uoK3ImGg==}
+
+  '@capacitor/local-notifications@6.1.0':
+    resolution: {integrity: sha512-EjEnbApdFiZYeJgxKIDtgFRNSmeHySnyAeyoTn6HUTYMkTOaHFGAd7NU964k7gbX4al/CBp0cMA8iMG0c7kh1w==}
+    peerDependencies:
+      '@capacitor/core': ^6.0.0
+
+  '@capacitor/storage@1.2.5':
+    resolution: {integrity: sha512-pWhnw4U7wN/zFV4lA4BLMypSufTktCbk548Yk4whSb0KAq3R0mLfSubRIHkGdcPqQWCsM6g/zUuszurhz6ncWQ==}
+    deprecated: package has been renamed to @capacitor/preferences
+    peerDependencies:
+      '@capacitor/core': ^3.0.0
 
   '@esbuild/aix-ppc64@0.21.5':
     resolution: {integrity: sha512-1SDgH6ZSPTlggy1yI6+Dbkiz8xzpHJEVAlF/AM1tHPLsf5STom9rwtjE4hKAF20FfXXNTFqEYXyJNWh1GiZedQ==}
@@ -2232,6 +2256,12 @@ snapshots:
     dependencies:
       regenerator-runtime: 0.14.1
 
+  '@capacitor-community/storage-react@0.1.0(@capacitor/core@6.1.2)(@capacitor/storage@1.2.5(@capacitor/core@6.1.2))(react@18.3.1)':
+    dependencies:
+      '@capacitor/core': 6.1.2
+      '@capacitor/storage': 1.2.5(@capacitor/core@6.1.2)
+      react: 18.3.1
+
   '@capacitor/android@6.1.2(@capacitor/core@6.1.2)':
     dependencies:
       '@capacitor/core': 6.1.2
@@ -2262,6 +2292,14 @@ snapshots:
   '@capacitor/core@6.1.2':
     dependencies:
       tslib: 2.7.0
+
+  '@capacitor/local-notifications@6.1.0(@capacitor/core@6.1.2)':
+    dependencies:
+      '@capacitor/core': 6.1.2
+
+  '@capacitor/storage@1.2.5(@capacitor/core@6.1.2)':
+    dependencies:
+      '@capacitor/core': 6.1.2
 
   '@esbuild/aix-ppc64@0.21.5':
     optional: true
