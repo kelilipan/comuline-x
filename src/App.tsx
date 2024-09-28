@@ -24,14 +24,13 @@ function App() {
     const loadSerwist = async () => {
       if ("serviceWorker" in navigator) {
         const serwist = await getSerwist();
-
         serwist?.addEventListener("installed", () => {
           console.log("Serwist installed!");
         });
-
         void serwist?.register();
       }
     };
+    loadSerwist();
     const checkExactNotifPermission = async () => {
       const { exact_alarm } =
         await LocalNotifications.checkExactNotificationSetting();
@@ -39,7 +38,6 @@ function App() {
         LocalNotifications.changeExactNotificationSetting();
       }
     };
-    loadSerwist();
     checkExactNotifPermission();
   }, []);
 

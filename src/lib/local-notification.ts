@@ -68,6 +68,8 @@ export const scheduleNotification = async (
 
   const notificationIds = result.notifications.map((item) => item.id);
 
+  console.log(days, result);
+
   const notificationReminderPayload: ReminderData = {
     id: schedule.id,
     destination: schedule.destination,

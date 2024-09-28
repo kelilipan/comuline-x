@@ -17,7 +17,7 @@ const config: CapacitorConfig = {
     },
   },
   server: {
-    hostname: "jadwal-krl.wisesa.dev",
+    androidScheme: "https",
   },
 };
 
