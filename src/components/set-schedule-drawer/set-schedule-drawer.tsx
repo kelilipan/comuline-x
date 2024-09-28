@@ -38,7 +38,7 @@ export interface SetScheduleDrawerProps extends PropsWithChildren {
 }
 
 const formSchema = z.object({
-  beforeMinutes: z.number().min(0).max(60).optional(),
+  beforeMinutes: z.coerce.number().min(0).max(60).optional(),
   days: z
     .array(
       //https://capacitorjs.com/docs/apis/local-notifications#enums
@@ -218,7 +218,7 @@ const SetScheduleDrawer = ({
                     <FormItem className="mt-4">
                       <FormLabel>Menit sebelum keberangkatan</FormLabel>
                       <FormControl>
-                        <Input placeholder="15" {...field} />
+                        <Input placeholder="15" type="number" {...field} />
                       </FormControl>
                       <FormDescription>
                         Default 15 menit sebelum keberangkatan kereta. Max 60

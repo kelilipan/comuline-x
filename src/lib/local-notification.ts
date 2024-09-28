@@ -47,8 +47,8 @@ export const scheduleNotification = async (
     });
 
     scheduleList.push({
-      title: "Weekday Notification",
-      body: "This is a weekday notification!",
+      title: `Kereta ${stationName}-${schedule.destination}`,
+      body: `Akan berangkat pada: ${schedule.timeEstimated}`,
       id: ids,
       schedule: {
         allowWhileIdle: true,
@@ -57,9 +57,8 @@ export const scheduleNotification = async (
           hour: scheduledAt.getHours(),
           minute: scheduledAt.getMinutes(),
         },
-        repeats: true,
       },
-    });
+    } satisfies LocalNotificationSchema);
   });
 
   const result = await LocalNotifications.schedule({

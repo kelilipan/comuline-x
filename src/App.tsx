@@ -39,6 +39,7 @@ function App() {
       }
     };
     checkExactNotifPermission();
+    LocalNotifications.getPending();
   }, []);
 
   return (
