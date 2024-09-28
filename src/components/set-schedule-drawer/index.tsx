@@ -1,1 +1,1 @@
-export { default } from "./set-schedule-drawer";
+export { default } from "./lazy";

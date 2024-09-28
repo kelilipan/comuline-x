@@ -16,6 +16,9 @@ const config: CapacitorConfig = {
       iconColor: "#ffffff",
     },
   },
+  server: {
+    hostname: "jadwal-krl.wisesa.dev",
+  },
 };
 
 export default config;

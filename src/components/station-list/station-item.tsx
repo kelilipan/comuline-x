@@ -116,7 +116,11 @@ const StationItem = ({ id, name }: Station) => {
                       </p>
                     </div>
                     <div className="text-right">
-                      <ScheduleItemWrapper className="text-right">
+                      <ScheduleItemWrapper
+                        className="text-right"
+                        schedule={firstSchedule}
+                        stationName={name}
+                      >
                         <p className="text-xs text-muted-foreground">
                           Berangkat pukul
                         </p>
@@ -130,10 +134,13 @@ const StationItem = ({ id, name }: Station) => {
                     </div>
                   </div>
                   {Boolean(nextSchedules.length) && (
-                    <NextSchedule schedules={nextSchedules} />
+                    <NextSchedule
+                      schedules={nextSchedules}
+                      stationName={name}
+                    />
                   )}
                   {Boolean(moreSchedule.length) && (
-                    <MoreSchedule schedules={moreSchedule} />
+                    <MoreSchedule schedules={moreSchedule} stationName={name} />
                   )}
                 </div>
               );

@@ -3,14 +3,19 @@ import ScheduleItemWrapper from "./schedule-item-wrapper";
 import { getRelativeTimeString } from "@/lib/date";
 export interface NextScheduleProps {
   schedules: Schedule[];
+  stationName: string;
 }
-const NextSchedule = ({ schedules }: NextScheduleProps) => {
+const NextSchedule = ({ schedules, stationName }: NextScheduleProps) => {
   return (
     <>
       <p className="text-xs mt-2 text-muted-foreground">Jam berikutnya</p>
       <div className="grid grid-cols-2 mt-2">
         {schedules.map((item) => (
-          <ScheduleItemWrapper key={item.id}>
+          <ScheduleItemWrapper
+            key={item.id}
+            schedule={item}
+            stationName={stationName}
+          >
             <p className="font-mono text-sm font-semibold">
               {item.timeEstimated}
             </p>

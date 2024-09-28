@@ -7,7 +7,7 @@ import {
 import { NextScheduleProps } from "./next-schedule";
 import ScheduleItemWrapper from "./schedule-item-wrapper";
 
-const MoreSchedule = ({ schedules }: NextScheduleProps) => {
+const MoreSchedule = ({ schedules, stationName }: NextScheduleProps) => {
   return (
     <Accordion type="single" collapsible className="w-full">
       <AccordionItem className="border-b-0" value="item-1">
@@ -20,6 +20,8 @@ const MoreSchedule = ({ schedules }: NextScheduleProps) => {
               <ScheduleItemWrapper
                 key={item.id}
                 className="bg-border font-mono font-bold w-full text-center rounded py-2"
+                schedule={item}
+                stationName={stationName}
               >
                 {item.timeEstimated}
               </ScheduleItemWrapper>
