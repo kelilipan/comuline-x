@@ -88,20 +88,6 @@ const SetScheduleDrawer = ({
 }: SetScheduleDrawerProps) => {
   const [reminder, setReminder] = useState<ReminderStore>();
   const [open, setOpen] = useState(false);
-  useEffect(() => {
-    const loadValue = async () => {
-      const { value: remindersLS } = await Preferences.get({
-        key: NOTIFICATION_REMINDER_KEY,
-      });
-      if (remindersLS) {
-        setReminder(JSON.parse(remindersLS) as ReminderStore);
-      }
-    };
-    if (open) loadValue();
-    return () => {
-      setReminder(undefined);
-    };
-  }, [open]);
 
   const currentReminder = reminder?.[schedule.id] || null;
   const form = useForm<LocalNotificationFormPayload>({
@@ -116,6 +102,22 @@ const SetScheduleDrawer = ({
     await scheduleNotification(stationName, schedule, values);
     setOpen(false);
   };
+
+  useEffect(() => {
+    const loadValue = async () => {
+      const { value: remindersLS } = await Preferences.get({
+        key: NOTIFICATION_REMINDER_KEY,
+      });
+      if (remindersLS) {
+        setReminder(JSON.parse(remindersLS) as ReminderStore);
+      }
+    };
+    if (open) loadValue();
+    return () => {
+      setReminder(undefined);
+      form.reset();
+    };
+  }, [open]);
 
   return (
     <Drawer

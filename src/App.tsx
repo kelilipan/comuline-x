@@ -1,14 +1,15 @@
 import { useEffect } from "react";
 import { getSerwist } from "virtual:serwist";
 import { toast } from "sonner";
+import { LocalNotifications } from "@capacitor/local-notifications";
+
+import { StationProvider } from "./contexts/stations-context";
+import { UIProvider } from "./contexts/ui-context";
+import useOnlineStatus from "./hooks/use-online-status";
 
 import StationList from "./components/station-list";
 import Navbar from "./components/navbar";
 import { Toaster } from "./components/ui/sonner";
-import { StationProvider } from "./contexts/stations-context";
-import { UIProvider } from "./contexts/ui-context";
-import useOnlineStatus from "./hooks/use-online-status";
-import { LocalNotifications } from "@capacitor/local-notifications";
 
 function App() {
   const isOnline = useOnlineStatus();
@@ -39,7 +40,6 @@ function App() {
       }
     };
     checkExactNotifPermission();
-    LocalNotifications.getPending();
   }, []);
 
   return (

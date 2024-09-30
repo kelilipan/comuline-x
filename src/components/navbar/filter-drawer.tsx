@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { IoFunnelOutline } from "react-icons/io5";
 import {
@@ -24,10 +24,17 @@ const FilterDrawer = ({ open, onOpenChange }: FilterDrawerProps) => {
   const [value, setValue] = useState<string>(sort);
 
   const handleChangeFilter = () => {
-    //type check
-    sortBy(value === "name" ? "name" : "date");
+    sortBy(value as "name" | "date");
     onOpenChange(false);
   };
+
+  useEffect(() => {
+    //reset
+    if (open) {
+      setValue(sort);
+    }
+  }, [open]);
+
   return (
     <Drawer
       open={open}

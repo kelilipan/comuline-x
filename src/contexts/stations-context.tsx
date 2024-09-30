@@ -1,10 +1,13 @@
+import { SORT_BY_KEY, STATIONS_KEY } from "@/models/constants";
 import { Station, StationLS } from "@/models/station";
+import { Preferences } from "@capacitor/preferences";
 import {
   createContext,
   PropsWithChildren,
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 
@@ -23,43 +26,72 @@ const StationContext = createContext<StationContextProps | undefined>(
   undefined
 );
 
-const SAVED_STATION_LS_KEY = "saved-stations";
-const SORT_STATION_LS_KEY = "sort-by";
-
-const loadStationsFromLocalStorage = (): StationLS[] => {
-  const storedStations = localStorage.getItem(SAVED_STATION_LS_KEY);
-  return storedStations ? JSON.parse(storedStations) : [];
-};
-
-const loadSortbyFromLocalStorage = (): "name" | "date" => {
-  const storedStations = localStorage.getItem(SORT_STATION_LS_KEY);
-  return storedStations ? JSON.parse(storedStations) : "name";
-};
-
 export const StationProvider = ({ children }: PropsWithChildren) => {
-  const [stations, setStations] = useState<StationLS[]>(
-    loadStationsFromLocalStorage
-  );
-  const [sort, setSorted] = useState<"name" | "date">(
-    loadSortbyFromLocalStorage
-  );
+  const [stations, setStations] = useState<StationLS[]>([]);
+  const [sort, setSorted] = useState<"name" | "date">("name");
   const [query, setQuery] = useState("");
+  const firstRender = useRef(true);
 
   useEffect(() => {
-    // Sync stations state with localStorage
-    localStorage.setItem(SAVED_STATION_LS_KEY, JSON.stringify(stations));
-  }, [stations]);
+    const loadValue = async () => {
+      const { value: savedStationLS } = await Preferences.get({
+        key: STATIONS_KEY,
+      });
+
+      if (savedStationLS) {
+        try {
+          setStations(JSON.parse(savedStationLS) as StationLS[]);
+        } catch (error) {
+          //do nothing
+        }
+      }
+
+      const { value: sortByLS } = await Preferences.get({
+        key: SORT_BY_KEY,
+      });
+
+      if (sortByLS) {
+        setSorted(JSON.parse(sortByLS) as "name" | "date");
+      }
+      firstRender.current = false;
+    };
+
+    loadValue();
+  }, []);
 
   useEffect(() => {
-    // Sync stations state with localStorage
-    localStorage.setItem(SORT_STATION_LS_KEY, JSON.stringify(sort));
+    const syncState = async () => {
+      await Preferences.set({
+        key: SORT_BY_KEY,
+        value: JSON.stringify(sort),
+      });
+    };
+    if (!firstRender.current) {
+      syncState();
+    }
   }, [sort]);
+
+  useEffect(() => {
+    const syncState = async () => {
+      await Preferences.set({
+        key: STATIONS_KEY,
+        value: JSON.stringify(stations),
+      });
+    };
+    if (!firstRender.current) {
+      syncState();
+    }
+  }, [stations]);
 
   const addStation = (station: Station) => {
     const newStation = { ...station, savedAt: new Date().toISOString() };
-    setStations((prevStations) =>
-      [...prevStations, newStation].sort((a, b) => a.name.localeCompare(b.name))
-    );
+
+    setStations((prevStations) => {
+      const newData = [...prevStations, newStation].sort((a, b) =>
+        a.name.localeCompare(b.name)
+      );
+      return newData;
+    });
   };
 
   const sortBy = (by: "name" | "date") => {
