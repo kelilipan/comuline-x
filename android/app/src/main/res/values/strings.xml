@@ -4,4 +4,9 @@
     <string name="title_activity_main">Comuline X</string>
     <string name="package_name">dev.wisesa.comuline</string>
     <string name="custom_url_scheme">dev.wisesa.comuline</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="configure">Configure</string>
+    <string name="add_widget">Add widget</string>
+    <string name="app_widget_description">Schedule</string>
+    <string name="search_station_name">Pilih stasiun keberangkatan</string>
 </resources>

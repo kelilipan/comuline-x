@@ -1,6 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
+
+    buildFeatures {
+        viewBinding true
+    }
     namespace "dev.wisesa.comuline"
     compileSdk rootProject.ext.compileSdkVersion
     defaultConfig {
@@ -40,6 +44,9 @@ dependencies {
     androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
     androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
     implementation project(':capacitor-cordova-android-plugins')
+
+    implementation 'com.squareup.retrofit2:retrofit:2.11.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
 }
 
 apply from: 'capacitor.build.gradle'
