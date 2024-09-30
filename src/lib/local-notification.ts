@@ -19,7 +19,7 @@ export const scheduleNotification = async (
   payload: LocalNotificationFormPayload
 ) => {
   const { value: idsLS } = await Preferences.get({ key: NOTIFICATION_IDS_KEY });
-  const ids = idsLS ? Number(idsLS) : 0;
+  let lastID = idsLS ? Number(idsLS) : 0;
 
   const { value: reminderLS } = await Preferences.get({
     key: NOTIFICATION_REMINDER_KEY,
@@ -29,7 +29,10 @@ export const scheduleNotification = async (
   //exact notification settings
 
   // Request permission to display notifications
-  await LocalNotifications.requestPermissions();
+  const { display } = await LocalNotifications.requestPermissions();
+
+  if (display !== "granted") return;
+
   const { beforeMinutes = 0, days } = payload;
   const { timeEstimated } = schedule;
   const dateObj = new Date();
@@ -41,15 +44,12 @@ export const scheduleNotification = async (
   // Schedule the notification
   const scheduleList: LocalNotificationSchema[] = [];
   days.forEach(async (weekday) => {
-    await Preferences.set({
-      key: NOTIFICATION_IDS_KEY,
-      value: JSON.stringify(ids + 1),
-    });
+    lastID += 1;
 
     scheduleList.push({
       title: `Kereta ${stationName}-${schedule.destination}`,
       body: `Akan berangkat pada: ${schedule.timeEstimated}`,
-      id: ids,
+      id: lastID,
       schedule: {
         allowWhileIdle: true,
         on: {
@@ -67,8 +67,6 @@ export const scheduleNotification = async (
 
   const notificationIds = result.notifications.map((item) => item.id);
 
-  console.log(days, result);
-
   const notificationReminderPayload: ReminderData = {
     id: schedule.id,
     destination: schedule.destination,
@@ -84,5 +82,10 @@ export const scheduleNotification = async (
   await Preferences.set({
     key: NOTIFICATION_REMINDER_KEY,
     value: JSON.stringify(reminders),
+  });
+
+  await Preferences.set({
+    key: NOTIFICATION_IDS_KEY,
+    value: JSON.stringify(lastID),
   });
 };

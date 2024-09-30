@@ -34,8 +34,8 @@ function App() {
     const checkExactNotifPermission = async () => {
       const { exact_alarm } =
         await LocalNotifications.checkExactNotificationSetting();
-      if (!exact_alarm) {
-        LocalNotifications.changeExactNotificationSetting();
+      if (exact_alarm !== "granted") {
+        await LocalNotifications.changeExactNotificationSetting();
       }
     };
     checkExactNotifPermission();
