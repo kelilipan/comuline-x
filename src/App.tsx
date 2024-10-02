@@ -26,7 +26,7 @@ function App() {
       if ("serviceWorker" in navigator) {
         const serwist = await getSerwist();
         serwist?.addEventListener("installed", () => {
-          console.log("Serwist installed!");
+          //@todo: do nothing for now
         });
         void serwist?.register();
       }
