@@ -2,6 +2,8 @@
 
 Comuline X is a complete rewrite of [@comuline/web](https://github.com/comuline/web) using React and [Vite](https://vitejs.dev/).
 
+> Download APK on [release tab](https://github.com/kelilipan/comuline-x/releases)
+
 ## Features
 
 - **Offline Support**: Access train schedule without an internet connection (powered by PWA).
