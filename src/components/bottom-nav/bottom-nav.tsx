@@ -7,10 +7,12 @@ import {
 import { Button } from "../ui/button";
 import { useUIContext } from "@/contexts/ui-context";
 import { Link, useRouteMatch } from "react-router-dom";
+import { Capacitor } from "@capacitor/core";
 
 const BottomNav = () => {
   const { handleToggleState } = useUIContext();
   const matchNotification = useRouteMatch("/notifications");
+  const isMobile = Capacitor.isNativePlatform();
 
   const NotificationIcon = matchNotification
     ? IoNotifications
@@ -25,16 +27,18 @@ const BottomNav = () => {
       >
         <IoAdd className="size-5" />
       </Button>
-      <Button
-        aria-label="reminded station"
-        variant="ghost"
-        className="px-2 py-1"
-        asChild
-      >
-        <Link to={matchNotification ? "/" : "/notifications"} replace>
-          <NotificationIcon className="size-5" />
-        </Link>
-      </Button>
+      {isMobile && (
+        <Button
+          aria-label="reminded station"
+          variant="ghost"
+          className="px-2 py-1"
+          asChild
+        >
+          <Link to={matchNotification ? "/" : "/notifications"} replace>
+            <NotificationIcon className="size-5" />
+          </Link>
+        </Button>
+      )}
       <Button
         aria-label="search"
         variant="ghost"

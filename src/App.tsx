@@ -78,7 +78,7 @@ function App() {
           </Switch>
 
           <Toaster position="top-center" />
-          {(isMobile || import.meta.env.DEV) && <BottomNav />}
+          <BottomNav />
         </UIProvider>
       </StationProvider>
     </Router>
