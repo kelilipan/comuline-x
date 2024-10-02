@@ -16,7 +16,7 @@ const BottomNav = () => {
     ? IoNotifications
     : IoNotificationsOutline;
   return (
-    <div className="fixed bottom-0 w-full border-t border-t-border px-2 py-1 flex gap-2 justify-end z-50 bg-background max-w-[500px]">
+    <div className="absolute bottom-0 w-full border-t border-t-border px-2 py-1 flex gap-2 justify-end z-50 bg-background max-w-[500px]">
       <Button
         aria-label="add"
         variant="ghost"
@@ -31,7 +31,7 @@ const BottomNav = () => {
         className="px-2 py-1"
         asChild
       >
-        <Link to={matchNotification ? "/" : "/notifications"}>
+        <Link to={matchNotification ? "/" : "/notifications"} replace>
           <NotificationIcon className="size-5" />
         </Link>
       </Button>
