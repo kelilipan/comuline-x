@@ -18,7 +18,7 @@ const BottomNav = () => {
     ? IoNotifications
     : IoNotificationsOutline;
   return (
-    <div className="absolute bottom-0 w-full border-t border-t-border px-2 py-1 flex gap-2 justify-end z-50 bg-background max-w-[500px]">
+    <div className="fixed bottom-0 w-full border-t border-t-border px-2 py-1 flex gap-2 justify-end z-50 bg-background max-w-[500px]">
       <Button
         aria-label="add"
         variant="ghost"
