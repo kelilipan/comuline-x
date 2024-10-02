@@ -48,7 +48,7 @@ export const scheduleNotification = async (
 
     scheduleList.push({
       title: `Kereta ${stationName}-${schedule.destination}`,
-      body: `Akan berangkat pada: ${schedule.timeEstimated}`,
+      body: `Akan berangkat pada: ${schedule.timeEstimated} WIB`,
       id: lastID,
       schedule: {
         allowWhileIdle: true,
@@ -76,6 +76,7 @@ export const scheduleNotification = async (
     stationName,
     beforeMinutes,
     days,
+    timeEstimated,
   };
   reminders[schedule.id] = notificationReminderPayload;
 
@@ -88,4 +89,20 @@ export const scheduleNotification = async (
     key: NOTIFICATION_IDS_KEY,
     value: JSON.stringify(lastID),
   });
+};
+
+export const deleteNotification = async (id: string, store: ReminderStore) => {
+  const _temp = { ...store };
+  const currentData = _temp[id];
+
+  LocalNotifications.cancel({
+    notifications: currentData.notificationIds.map((id) => ({ id })),
+  });
+
+  delete _temp[id];
+  await Preferences.set({
+    key: NOTIFICATION_REMINDER_KEY,
+    value: JSON.stringify(_temp),
+  });
+  return _temp;
 };

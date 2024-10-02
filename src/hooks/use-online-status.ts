@@ -1,19 +1,34 @@
 import { useEffect, useState } from "react";
+import { Network } from "@capacitor/network";
+import { Capacitor } from "@capacitor/core";
 
 function useOnlineStatus() {
-  const [isOnline, setIsOnline] = useState(navigator.onLine);
+  const [isOnline, setIsOnline] = useState(true);
+  const isMobile = Capacitor.isNativePlatform();
 
   useEffect(() => {
-    const updateOnlineStatus = () => {
-      setIsOnline(navigator.onLine);
+    const updateOnlineStatus = async () => {
+      const currentStatus = isMobile
+        ? (await Network.getStatus()).connected
+        : navigator.onLine;
+      setIsOnline(currentStatus);
     };
-
-    window.addEventListener("online", updateOnlineStatus);
-    window.addEventListener("offline", updateOnlineStatus);
+    if (isMobile) {
+      Network.addListener("networkStatusChange", () => {
+        updateOnlineStatus();
+      });
+    } else {
+      window.addEventListener("online", updateOnlineStatus);
+      window.addEventListener("offline", updateOnlineStatus);
+    }
 
     return () => {
-      window.removeEventListener("online", updateOnlineStatus);
-      window.removeEventListener("offline", updateOnlineStatus);
+      if (isMobile) {
+        Network.removeAllListeners();
+      } else {
+        window.removeEventListener("online", updateOnlineStatus);
+        window.removeEventListener("offline", updateOnlineStatus);
+      }
     };
   }, []);
 

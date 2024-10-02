@@ -12,8 +12,10 @@ import { IoAdd, IoClose, IoSearchOutline } from "react-icons/io5";
 
 import {
   Drawer,
+  DrawerClose,
   DrawerContent,
   DrawerDescription,
+  DrawerFooter,
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
@@ -106,7 +108,7 @@ const AddStationDrawer = ({ open, onOpenChange }: AddStationDrawerProps) => {
             cari nama stasiun dan tambahkan ke dalam daftar stasiun
           </DrawerDescription>
         </DrawerHeader>
-        <ScrollArea className="h-[85vh] w-full relative">
+        <ScrollArea className="h-[75vh] w-full relative">
           <div className="w-full border-b sticky top-0 bg-border">
             <IoSearchOutline className="absolute left-2 top-2" />
             <InputComponent ref={inputRef} onValueChange={setQuery} />
@@ -144,6 +146,11 @@ const AddStationDrawer = ({ open, onOpenChange }: AddStationDrawerProps) => {
             ))}
           </div>
         </ScrollArea>
+        <DrawerFooter>
+          <DrawerClose asChild>
+            <Button variant="outline">Tutup</Button>
+          </DrawerClose>
+        </DrawerFooter>
       </DrawerContent>
     </Drawer>
   );

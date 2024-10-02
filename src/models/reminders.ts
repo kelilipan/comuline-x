@@ -10,5 +10,6 @@ export interface ReminderData {
   notificationIds: number[];
   days: number[];
   beforeMinutes: number;
+  timeEstimated: Schedule["timeEstimated"];
 }
 export type ReminderStore = Record<string, ReminderData>;

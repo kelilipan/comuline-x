@@ -16,7 +16,7 @@ const ScheduleItemWrapper = ({
   schedule,
   stationName,
 }: ScheduleItemWrapperProps) => {
-  const isMobile = Capacitor.isNativePlatform();
+  const isMobile = Capacitor.isNativePlatform() || import.meta.env.DEV;
 
   if (isMobile) {
     return (

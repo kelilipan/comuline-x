@@ -8,7 +8,7 @@ import EmptyState from "./empty-state";
 const StationList = () => {
   const { filteredStations, query } = useStationContext();
   return (
-    <ScrollArea className="h-[calc(100vh-56px)] pb-8 select-none">
+    <ScrollArea className="mt-12 mb-14 h-[calc(100vh-48px-56px)] select-none">
       <Accordion type="multiple">
         {Boolean(filteredStations.length) ? (
           filteredStations.map((item) => (

@@ -8,6 +8,7 @@ import AddStationDrawer from "./add-station-drawer";
 import debounce from "@/lib/debounce";
 import { useStationContext } from "@/contexts/stations-context";
 import { useUIContext } from "@/contexts/ui-context";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const { uiState, handleToggleState } = useUIContext();
@@ -25,7 +26,7 @@ const Navbar = () => {
   }, [uiState.showSearch]);
 
   return (
-    <header className="px-3 mt-4 justify-between flex flex-nowrap h-8 items-center">
+    <header className="px-3 pt-4 justify-between flex flex-nowrap items-center fixed top-0 w-full max-w-[500px] bg-background z-50">
       <div className="mr-4 w-full h-full relative flex items-center">
         <CSSTransition
           nodeRef={logoRef}
@@ -41,7 +42,7 @@ const Navbar = () => {
               "absolute left-0"
             )}
           >
-            Jadwal KRL
+            <Link to="/">Jadwal KRL</Link>
           </h1>
         </CSSTransition>
         <CSSTransition
