@@ -18,6 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
        
+       <!-- @todo: create widget
         <receiver
             android:name=".StationWidget"
             android:exported="false" >
@@ -36,7 +37,7 @@
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>
-        </activity>
+        </activity> -->
         <activity
             android:name=".MainActivity"
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|locale|smallestScreenSize|screenLayout|uiMode"
