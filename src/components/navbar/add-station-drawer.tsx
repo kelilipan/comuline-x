@@ -108,7 +108,7 @@ const AddStationDrawer = ({ open, onOpenChange }: AddStationDrawerProps) => {
             cari nama stasiun dan tambahkan ke dalam daftar stasiun
           </DrawerDescription>
         </DrawerHeader>
-        <ScrollArea className="h-[75vh] w-full relative">
+        <ScrollArea className="h-[75lvh] w-full relative">
           <div className="w-full border-b sticky top-0 bg-border">
             <IoSearchOutline className="absolute left-2 top-2" />
             <InputComponent ref={inputRef} onValueChange={setQuery} />
