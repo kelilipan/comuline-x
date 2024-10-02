@@ -3,7 +3,7 @@ package dev.wisesa.comuline;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.Context;
-import android.widget.EditText;
+import android.content.SharedPreferences;
 import android.widget.RemoteViews;
 
 /**
@@ -11,19 +11,18 @@ import android.widget.RemoteViews;
  * App Widget Configuration implemented in {@link StationWidgetConfigureActivity StationWidgetConfigureActivity}
  */
 public class StationWidget extends AppWidgetProvider {
-
     static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                 int appWidgetId) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("dev.wisesa.comuline.StationWidget", Context.MODE_PRIVATE);
+        String stationName = sharedPreferences.getString("station_name_" + appWidgetId, "No Station Selected");
+        String stationId = sharedPreferences.getString("station_id_" + appWidgetId, "");
 
-
-        // Construct the RemoteViews object
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.station_widget);
-        views.setTextViewText(R.id.stationId, "TODO");
-        views.setTextViewText(R.id.stationId, "ID");
-
+        views.setTextViewText(R.id.stationName, "Station: " + stationName);
+        views.setTextViewText(R.id.stationId, "ID: " + stationId);
 
         // Instruct the widget manager to update the widget
-        appWidgetManager.updateAppWidget(appWidgetId, views);
+        appWidgetManager.updateAppWidget(appWidgetId,views);
     }
 
     @Override

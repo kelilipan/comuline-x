@@ -1,7 +1,10 @@
 package dev.wisesa.comuline;
 
 import android.app.Activity;
+import android.appwidget.AppWidgetManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +17,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationViewHolder> {
+    private int appWidgetId;
+    private Context context;
+    private List<Station> stationList;
+    private List<Station> filteredStationList;
 
-    private List<Station> stationList; // Original list of stations
-    private List<Station> filteredStationList; // List for filtered stations
-
-    public StationAdapter(List<Station> stationList) {
+    public StationAdapter(Context context,int appWidgetId,List<Station> stationList) {
+        this.appWidgetId = appWidgetId;
+        this.context = context;
         this.stationList = stationList;
-        this.filteredStationList = new ArrayList<>(stationList); // Initialize filtered list with original data
+        this.filteredStationList = new ArrayList<>(stationList);
     }
 
     @NonNull
@@ -34,10 +40,26 @@ public class StationAdapter extends RecyclerView.Adapter<StationAdapter.StationV
     public void onBindViewHolder(@NonNull StationViewHolder holder, int position) {
         Station station = filteredStationList.get(position);
         String stationName = capitalize(station.getName());
+        String stationId = station.getId();
+
         holder.stationNameTextView.setText(stationName); // Display station name
 
         holder.itemView.setOnClickListener(v -> {
-           // todo
+
+            // Store selected station data in SharedPreferences
+            SharedPreferences sharedPreferences = context.getSharedPreferences("dev.wisesa.comuline.StationWidget", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("station_name_" + appWidgetId, stationName);
+            editor.putString("station_id_" + appWidgetId, stationId);
+            editor.apply();
+
+            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+            StationWidget.updateAppWidget(context, appWidgetManager, appWidgetId);
+
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
+            ((Activity) context).setResult(Activity.RESULT_OK, resultIntent);
+            ((Activity) context).finish();
         });
     }
 
